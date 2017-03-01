@@ -1,0 +1,13 @@
+variables:
+  CI_NAME: "GitLab CI"
+  CI_TMP_DIR: "${CI_PROJECT_DIR}.tmp"
+  JULIA_PKGDIR: "${CI_PROJECT_DIR}.tmp/packages"  # Note: Cannot reference CI_TMP_DIR here
+
+"METADATA":
+  tags:
+    - linux
+    - amd64
+  script:
+    - sh .test/ci.sh
+  after_script:
+    - rm -rf $CI_TMP_DIR  # METADATA wastes lots of inodes
