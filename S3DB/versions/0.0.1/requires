@@ -1,0 +1,5 @@
+julia 0.5
+URIParser 0.1.6
+TimeZones 0.2.5
+JSON 0.8.0
+Requests
