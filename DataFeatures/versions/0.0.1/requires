@@ -1,0 +1,8 @@
+julia 0.5
+TimeZones
+Mocking
+CSV
+DataFrames
+S3DB
+DateOffsets
+LaxZonedDateTimes 0.0.2

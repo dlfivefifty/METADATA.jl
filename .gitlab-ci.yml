@@ -1,0 +1,18 @@
+variables:
+  CI_NAME: "GitLab CI"
+  CI_TMP_DIR: "${CI_PROJECT_DIR}.tmp"
+  JULIA_PKGDIR: "${CI_PROJECT_DIR}.tmp/packages"  # Note: Cannot reference CI_TMP_DIR here
+  PULL_REQUEST: "true"  # Not sure how to tell MR builds vs. anything else
+
+"METADATA":
+  tags:
+    - linux
+    - amd64
+  before_script:
+    - curl -s -o setup-julia https://gitlab.invenia.ca/infrastructure/gitlab-ci-helper/raw/master/setup-julia
+    - chmod +x setup-julia
+    - ./setup-julia set-metadata-credentials "$CI_PROJECT_DIR"
+  script:
+    - sh .test/ci.sh
+  after_script:
+    - rm -rf $CI_TMP_DIR  # METADATA wastes lots of inodes
