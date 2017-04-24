@@ -9,9 +9,9 @@ variables:
     - linux
     - amd64
   before_script:
-    - curl -s -o setup-julia https://gitlab.invenia.ca/infrastructure/gitlab-ci-helper/raw/master/setup-julia
-    - chmod +x setup-julia
-    - ./setup-julia set-metadata-credentials "$CI_PROJECT_DIR"
+    - curl -s -o julia-ci https://gitlab.invenia.ca/infrastructure/gitlab-ci-helper/raw/master/julia-ci
+    - chmod +x julia-ci
+    - ./julia-ci set-metadata-credentials "$CI_PROJECT_DIR"
   script:
     - sh .test/ci.sh
   after_script:
