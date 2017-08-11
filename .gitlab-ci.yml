@@ -6,6 +6,7 @@ variables:
 
 "METADATA":
   tags:
+    - shell-ci
     - linux
     - amd64
   before_script:
