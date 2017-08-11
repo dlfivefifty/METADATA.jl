@@ -1,19 +1,18 @@
 variables:
   CI_NAME: "GitLab CI"
   CI_TMP_DIR: "${CI_PROJECT_DIR}.tmp"
-  JULIA_PKGDIR: "${CI_PROJECT_DIR}.tmp/packages"  # Note: Cannot reference CI_TMP_DIR here
   PULL_REQUEST: "true"  # Not sure how to tell MR builds vs. anything else
 
 "METADATA":
+  image: amazonlinux:latest
   tags:
-    - shell-ci
+    - docker-ci
     - linux
     - amd64
   before_script:
-    - curl -s -o julia-ci https://gitlab.invenia.ca/infrastructure/gitlab-ci-helper/raw/master/julia-ci
-    - chmod +x julia-ci
-    - ./julia-ci set-metadata-credentials "$CI_PROJECT_DIR"
+    - yum install -y -q git find xargs sed
+    # Grant access to registered private packages
+    - REGEX="s;https://gitlab.invenia.ca/;https://gitlab-ci-token:$CI_BUILD_TOKEN@gitlab.invenia.ca/;"
+    - find "$CI_PROJECT_DIR" -maxdepth 2 -name url | xargs sed -i -e "$REGEX"
   script:
     - sh .test/ci.sh
-  after_script:
-    - rm -rf $CI_TMP_DIR  # METADATA wastes lots of inodes
