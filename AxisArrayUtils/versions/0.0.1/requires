@@ -1,0 +1,4 @@
+julia 0.5
+AxisArrays 0.1.4  # Really we want 0.1.4+
+DataFrames 0.8.3
+DataTables 0.0.3
