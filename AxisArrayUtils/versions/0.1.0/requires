@@ -1,0 +1,4 @@
+julia 0.6
+AxisArrays 0.2.0
+DataFrames 0.8.3
+DataTables 0.0.3
