@@ -1,0 +1,11 @@
+julia 0.6
+TimeZones 0.4
+CSV 0.2
+DataFrames 0.11
+S3DB 0.2.1
+DateOffsets 0.2
+Dispatcher
+LaxZonedDateTimes 0.1
+CategoricalArrays
+Memento
+Compat 0.30
