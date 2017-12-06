@@ -1,4 +1,4 @@
 julia 0.6
-DataArrays
-DataFrames
+DataArrays  # See git log 6b5d77dca in private METADATA
+DataFrames  # See git log 6b5d77dca in private METADATA
 PyCall 1.5
