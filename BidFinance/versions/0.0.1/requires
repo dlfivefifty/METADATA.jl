@@ -1,0 +1,8 @@
+julia 0.6
+ElectricityMarkets 0.4.1
+Bids 0.1.1
+TimeZones 0.4.1
+S3DB 0.2.0
+DataFrames 0.11
+FixedPointDecimals 0.1.0
+CSV 0.1.4
