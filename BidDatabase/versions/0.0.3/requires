@@ -1,0 +1,11 @@
+julia 0.6
+ElectricityMarkets
+Bids 0.1.0
+ODBC 0.6.0
+DataStructures 0.7.2
+DataFrames 0.11.0
+TimeZones 0.4.1
+URIParser 0.1.8
+Memento 0.2.0
+FixedPointDecimals 0.0.1
+@osx Homebrew 0.5.8
