@@ -1,0 +1,9 @@
+julia 0.5
+TimeZones
+Mocking
+CSV # 0.1.5 once it's tagged
+DataFrames
+S3DB
+DateOffsets 0.1.2
+Dispatcher
+LaxZonedDateTimes 0.0.3

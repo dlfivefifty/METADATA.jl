@@ -1,0 +1,9 @@
+julia 0.6
+URIParser 0.1.6
+TimeZones 0.4.0
+JSON 0.8.0
+Requests
+PyCall 1.13
+Conda
+CSV
+DataFrames

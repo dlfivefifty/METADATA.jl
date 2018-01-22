@@ -1,0 +1,5 @@
+julia 0.6
+TimeZones 0.3.0
+Memento 0.0.1
+DataFrames 0.8.5
+FixedPointDecimals 0.1.0

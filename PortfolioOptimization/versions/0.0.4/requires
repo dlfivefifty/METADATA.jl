@@ -1,0 +1,11 @@
+julia 0.6
+Memento 0.0.1
+DataFrames 0.11
+AxisArrays 0.0.2
+Requires
+# We have registered the Convex.jl v0.6.0 tag in our private metadata (the tag is public).
+# For details see: https://github.com/JuliaOpt/Convex.jl/issues/211
+Convex 0.6.0
+# NOTE: ECOS is ~4x slower than Mosek, but it is free and open source.
+ECOS 0.7.2
+# Mosek 0.6.0 0.8.0 # Mosek is currently broken on multiple versions for different reasons.
