@@ -2,7 +2,7 @@ julia 0.6
 ElectricityMarkets 0.5.2
 Bids 0.1.0
 @osx Homebrew  # until LibPQ v0.2.1
-LibPQ 0.2.0
+LibPQ 0.2.0 0.3.0
 NamedTuples
 StatsBase
 Missings

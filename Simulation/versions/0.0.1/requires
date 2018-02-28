@@ -6,7 +6,7 @@ DataFrames 0.11
 Missings 0.2.3
 Mocking 0.5
 Memento 0.5
-LibPQ 0.2.1
+LibPQ 0.2.1 0.3.0
 TimeZones 0.4
 WeakRefStrings 0.4.0 0.4.1 0.4.2
 # Private packages
