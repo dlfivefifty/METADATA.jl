@@ -1,0 +1,25 @@
+julia 0.6
+AxisArrays 0.2.1
+Compat 0.26
+DataArrays 0.7
+DataFrames 0.11
+Missings 0.2.3
+Mocking 0.5
+Memento 0.5
+LibPQ 0.2.1 0.3.0
+TimeZones 0.4
+WeakRefStrings 0.4.0 0.4.1 0.4.2
+# Private packages
+AxisArrayUtils 0.2
+Bids 0.1
+BidFiles 0.0.1
+BidFinance 0.1.0
+BidDatabase 0.1.0
+DataFeatures 0.3.0
+DateOffsets 0.2.1
+ElectricityMarkets 0.5
+FeatureSets 0.0.1
+PortfolioOptimization 0.0.3
+S3DB 0.3.0
+TemporalWeights 0.1
+RiskAnalysis 0.0.2
