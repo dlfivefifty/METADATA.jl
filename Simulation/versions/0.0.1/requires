@@ -15,7 +15,7 @@ Bids 0.1
 BidFiles 0.0.1
 BidFinance 0.1.0
 BidDatabase 0.1.0
-DataFeatures 0.3.0
+DataFeatures 0.3.0 0.4.0
 DateOffsets 0.2.1
 ElectricityMarkets 0.5
 FeatureSets 0.0.1
