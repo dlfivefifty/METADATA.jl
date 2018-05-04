@@ -1,0 +1,21 @@
+julia 0.6
+URIParser 0.1.6
+TimeZones 0.4.0
+JSON 0.8.0
+HTTP 0.6.1
+AWSCore 0.3.3
+PyCall 1.13
+Conda
+CSV 0.2.3
+DataFrames
+Memento 0.5.1
+Compat 0.50
+ProgressMeter 0.5.0
+Mocking 0.4.1
+DataStructures
+AutoHashEquals
+IterTools
+Intervals 0.0.1
+TranscodingStreams
+CodecLz4 0.0.2
+Missings
