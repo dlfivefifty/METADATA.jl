@@ -15,7 +15,7 @@ variables:
     - REGEX="s;https://gitlab.invenia.ca/;https://gitlab-ci-token:$CI_BUILD_TOKEN@gitlab.invenia.ca/;"
     - find "$CI_PROJECT_DIR" -maxdepth 2 -name url | xargs sed -i -e "$REGEX"
     # If any success files exist, remove them
-    - "[ -e $CI_TMP_DIR/success-* ] && rm $CI_TMP_DIR/success-*"
+    - rm -f $CI_TMP_DIR/success-*
   script:
     - sh .test/check-https.sh gitlab.invenia.ca
     - sh .test/ci.sh
