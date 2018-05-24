@@ -1,0 +1,9 @@
+julia 0.6
+TimeZones 0.4.1
+Memento 0.5.0
+DataFrames 0.11.0
+Missings 0.2
+FixedPointDecimals 0.1.0
+ElectricityMarkets
+Compat 0.26
+Intervals 0.0.7
