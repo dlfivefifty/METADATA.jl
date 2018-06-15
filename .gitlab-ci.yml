@@ -17,3 +17,21 @@ variables:
   script:
     - sh .test/check-https.sh gitlab.invenia.ca
     - sh .test/ci.sh
+
+deploy:
+  before_script:
+    - curl -s -o julia-ci https://gitlab.invenia.ca/infrastructure/gitlab-ci-helper/raw/master/julia-ci
+    - chmod +x julia-ci
+    - ./julia-ci install 0.7
+    - julia -e 'using Pkg; Pkg.update()'
+    - cd "~/.julia/registries" && git clone https://gitlab.invenia.ca/invenia/PackageRegistry.git Invenia
+    - cd && git clone https://gitlab.invenia.ca/invenia/UpdateRegistry.git
+    - export REGDIR="~/.julia/registries/Invenia"
+  script:
+    - cd "~/UpdateRegistry/src" && julia --color=yes update.jl
+    - if [ -z "$(git -C ${REGDIR} status -s)" ]; then exit 0; fi # no changes to private packages
+    - git -C "${REGDIR}" add -A
+    - git -C "${REGDIR}" commit -m "Incorporate changes from METADATA"
+    - ssh-agent bash -c "ssh-add <(echo \"${REGISTRY_DEPLOY_KEY}\"); git -C \"${REGDIR}\" push origin master"
+  only:
+    - invenia # Only deploy from builds on the default branch!
