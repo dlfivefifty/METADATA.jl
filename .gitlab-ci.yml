@@ -7,8 +7,6 @@ variables:
   image: amazonlinux:latest
   tags:
     - docker-ci
-    - linux
-    - amd64
   before_script:
     - yum install -y -q git find xargs sed
     # Grant access to registered private packages
