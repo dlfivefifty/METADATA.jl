@@ -7,12 +7,10 @@ variables:
   image: amazonlinux:latest
   tags:
     - docker-ci
-    - linux
-    - amd64
   before_script:
     - yum install -y -q git find xargs sed
     # Grant access to registered private packages
-    - REGEX="s;https://gitlab.invenia.ca/;https://gitlab-ci-token:$CI_BUILD_TOKEN@gitlab.invenia.ca/;"
+    - REGEX="s;https://gitlab.invenia.ca/;https://gitlab-ci-token:$CI_JOB_TOKEN@gitlab.invenia.ca/;"
     - find "$CI_PROJECT_DIR" -maxdepth 2 -name url | xargs sed -i -e "$REGEX"
     # If any success files exist, remove them
     - rm -f $CI_TMP_DIR/success-*
