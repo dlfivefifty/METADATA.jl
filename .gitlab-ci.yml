@@ -23,6 +23,7 @@ deploy:
     - curl -s -o julia-ci https://gitlab.invenia.ca/infrastructure/gitlab-ci-helper/raw/master/julia-ci
     - chmod +x julia-ci
     - ./julia-ci install 0.7
+    - source julia-ci export
     - julia -e 'using Pkg; Pkg.update()'
     - cd "~/.julia/registries" && git clone https://gitlab.invenia.ca/invenia/PackageRegistry.git Invenia
     - cd && git clone https://gitlab.invenia.ca/invenia/UpdateRegistry.git
