@@ -18,16 +18,18 @@ variables:
     - sh .test/check-https.sh gitlab.invenia.ca
     - sh .test/ci.sh
 
-deploy:
+"Sync PackageRegistry":
+  stage: deploy
+  tags:
+    - docker-ci
   before_script:
     - curl -s -o julia-ci https://gitlab.invenia.ca/infrastructure/gitlab-ci-helper/raw/master/julia-ci
     - chmod +x julia-ci
     - ./julia-ci install 0.7
     - source julia-ci export
     - julia -e 'using Pkg; Pkg.update()'
-    - cd "~/.julia/registries" && git clone https://gitlab.invenia.ca/invenia/PackageRegistry.git Invenia
-    - cd && git clone https://gitlab.invenia.ca/invenia/UpdateRegistry.git
-    - export REGDIR="~/.julia/registries/Invenia"
+    - cd && git clone https://gitlab-ci-token:$CI_JOB_TOKEN@gitlab.invenia.ca/invenia/UpdateRegistry.git
+    - export REGDIR="${JULIA_DEPOT_PATH}/registries/Invenia"
   script:
     - cd "~/UpdateRegistry/src" && julia --color=yes update.jl
     - if [ -z "$(git -C ${REGDIR} status -s)" ]; then exit 0; fi # no changes to private packages
