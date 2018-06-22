@@ -26,9 +26,10 @@ variables:
     - yum install -y -q git find xargs sed
     - curl -s -o julia-ci https://gitlab.invenia.ca/infrastructure/gitlab-ci-helper/raw/master/julia-ci
     - chmod +x julia-ci
+    - ./julia-ci install-cred-helper
     - ./julia-ci install 0.7
     - source julia-ci export
-    - cd && git clone https://gitlab-ci-token:$CI_JOB_TOKEN@gitlab.invenia.ca/invenia/UpdateRegistry.git
+    - cd && git clone https://gitlab.invenia.ca/invenia/UpdateRegistry.git
     - export REGDIR="${JULIA_DEPOT_PATH}/registries/Invenia"
   script:
     - cd "~/UpdateRegistry/src" && julia --color=yes update.jl
