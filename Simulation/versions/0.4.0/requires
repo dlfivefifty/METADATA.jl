@@ -1,0 +1,34 @@
+julia 0.6
+AWSSDK 0.3.1
+AxisArrays 0.2.1
+Compat 0.26
+CSV 0.2.4
+DataArrays 0.7
+DataFrames 0.11.6
+DataStreams 0.3.0 0.3.5
+Missings 0.2.3
+Mocking 0.5
+Memento 0.7
+LibPQ 0.2.1
+TimeZones 0.4
+WeakRefStrings 0.4.0 0.4.1 0.4.2
+FileIO 0.7.0
+AutoHashEquals 0.2.0
+Intervals 0.0.7
+StatsBase 0.22.0
+ResultTypes 2.0.0
+# Private packages
+AxisArrayUtils 0.2.4
+Bids 0.2
+BidFiles 0.2.0
+BidFinance 0.3
+BidDatabase 0.2.1
+DataFeatures 0.4.0
+DateOffsets 0.3.0
+ElectricityMarkets 0.6.1
+FeatureSets 0.1.1
+LaxZonedDateTimes
+PortfolioOptimization 0.0.3
+S3DB 0.6.0
+TemporalWeights 0.1
+RiskAnalysis 0.0.2
