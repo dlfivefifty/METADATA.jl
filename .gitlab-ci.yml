@@ -4,11 +4,11 @@ variables:
   PULL_REQUEST: "true"  # Not sure how to tell MR builds vs. anything else
 
 "METADATA":
-  image: amazonlinux:latest
+  image: amazonlinux:2
   tags:
     - docker-ci
   before_script:
-    - yum install -y -q git find xargs sed
+    - yum install -y -q curl tar git find xargs sed
     # Grant access to registered private packages
     - REGEX="s;https://gitlab.invenia.ca/;https://gitlab-ci-token:$CI_JOB_TOKEN@gitlab.invenia.ca/;"
     - find "$CI_PROJECT_DIR" -maxdepth 2 -name url | xargs sed -i -e "$REGEX"
@@ -20,10 +20,11 @@ variables:
 
 "Sync PackageRegistry":
   stage: deploy
+  image: amazonlinux:2
   tags:
     - docker-ci
   before_script:
-    - yum install -y -q git find xargs sed
+    - yum install -y -q curl tar git
     - curl -s -o julia-ci https://gitlab.invenia.ca/infrastructure/gitlab-ci-helper/raw/master/julia-ci
     - chmod +x julia-ci
     - ./julia-ci install-cred-helper
