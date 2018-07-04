@@ -53,5 +53,5 @@ cache: {}
     - git add -A
     - git -c user.name="METADATA Auto-Deployment" -c user.email="gitlab@invenia.ca" commit -m "Incorporate changes from METADATA"
     - git -c url.ssh://git@.pushInsteadOf=https:// push origin master
-  #only:
-  #  - invenia # Only deploy from builds on the default branch!
+  only:
+    - invenia # Only deploy from builds on the default branch!
