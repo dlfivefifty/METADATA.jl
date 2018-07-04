@@ -3,12 +3,17 @@ variables:
   CI_TMP_DIR: "${CI_PROJECT_DIR}.tmp"
   PULL_REQUEST: "true"  # Not sure how to tell MR builds vs. anything else
 
+# Disable GitLab CI's default cache policy of "pull-push"
+# https://docs.gitlab.com/ee/ci/yaml/#cache-policy
+# https://docs.gitlab.com/ce/ci/caching/index.html#disabling-cache-on-specific-jobs
+cache: {}
+
 "METADATA":
   image: amazonlinux:2
   tags:
     - docker-ci
   before_script:
-    - yum install -y -q curl tar git find xargs sed
+    - yum install -y -q curl tar git findutils sed
     # Grant access to registered private packages
     - REGEX="s;https://gitlab.invenia.ca/;https://gitlab-ci-token:$CI_JOB_TOKEN@gitlab.invenia.ca/;"
     - find "$CI_PROJECT_DIR" -maxdepth 2 -name url | xargs sed -i -e "$REGEX"
@@ -24,19 +29,29 @@ variables:
   tags:
     - docker-ci
   before_script:
+    # Install deploy key which allows us to push to PackageRegistry
+    - '[ -d ~/.ssh ] || mkdir -m 700 ~/.ssh'
+    - pushd ~/.ssh
+    - echo "${REGISTRY_DEPLOY_KEY}" > deploy
+    - chmod 400 ~/.ssh/deploy
+    - echo "068a1a1c6391a136b4d662a64438f730  deploy" > deploy.md5
+    - md5sum -c deploy.md5 || (env; exit 1)
+    - popd
+    # Setup Julia
+    - export GIT_SSH_COMMAND="ssh -i ~/.ssh/deploy -o StrictHostKeyChecking=no"
     - yum install -y -q curl tar git
     - curl -s -o julia-ci https://gitlab.invenia.ca/infrastructure/gitlab-ci-helper/raw/master/julia-ci
     - chmod +x julia-ci
     - ./julia-ci install-cred-helper
-    - ./julia-ci install 0.7
+    - ./julia-ci install 0.7-  # Need version >= 0.7.0-beta.53
     - source julia-ci export
-    - cd && git clone https://gitlab.invenia.ca/invenia/UpdateRegistry.git
-    - export REGDIR="${JULIA_DEPOT_PATH}/registries/Invenia"
+    - git clone https://github.com/JuliaLang/julia.git "${CI_TMP_DIR}/julia_source" --depth 1
   script:
-    - cd "~/UpdateRegistry/src" && julia --color=yes update.jl
-    - if [ -z "$(git -C ${REGDIR} status -s)" ]; then exit 0; fi # no changes to private packages
-    - git -C "${REGDIR}" add -A
-    - git -C "${REGDIR}" commit -m "Incorporate changes from METADATA"
-    - ssh-agent bash -c "ssh-add <(echo \"${REGISTRY_DEPLOY_KEY}\"); git -C \"${REGDIR}\" push origin master"
+    - julia --color=yes "${CI_PROJECT_DIR}/.deploy/update.jl"
+    - cd "${JULIA_DEPOT_PATH}/registries/Invenia"
+    - '[ -z "$(git status -s)" ] && exit 0'  # no changes to private packages
+    - git add -A
+    - git -c user.name="METADATA Auto-Deployment" -c user.email="gitlab@invenia.ca" commit -m "Incorporate changes from METADATA"
+    - git -c url.ssh://git@.pushInsteadOf=https:// push origin master
   only:
     - invenia # Only deploy from builds on the default branch!
