@@ -3,6 +3,6 @@ TimeZones
 Mocking
 CSV
 DataFrames
-S3DB
+S3DB 0.0.1 1.0
 DateOffsets
 LaxZonedDateTimes 0.0.2

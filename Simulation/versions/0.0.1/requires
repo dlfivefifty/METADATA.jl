@@ -20,6 +20,6 @@ DateOffsets 0.2.1
 ElectricityMarkets 0.5
 FeatureSets 0.0.1
 PortfolioOptimization 0.0.3
-S3DB 0.3.0
+S3DB 0.3.0 1.0
 TemporalWeights 0.1
 RiskAnalysis 0.0.2

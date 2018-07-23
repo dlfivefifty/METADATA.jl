@@ -25,6 +25,6 @@ ElectricityMarkets 0.6.1
 FeatureSets 0.1.1
 LaxZonedDateTimes
 PortfolioOptimization 0.0.3
-S3DB 0.6.0
+S3DB 0.6.0 1.0
 TemporalWeights 0.1
 RiskAnalysis 0.0.2
