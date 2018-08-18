@@ -43,7 +43,7 @@ cache: {}
     - curl -s -o julia-ci https://gitlab.invenia.ca/infrastructure/gitlab-ci-helper/raw/master/julia-ci
     - chmod +x julia-ci
     - ./julia-ci install-cred-helper
-    - ./julia-ci install 0.7-  # Need version >= 0.7.0-beta.53
+    - ./julia-ci install 1.0
     - source julia-ci export
     - git clone https://github.com/JuliaLang/julia.git "${CI_TMP_DIR}/julia_source" --depth 1
   script:
