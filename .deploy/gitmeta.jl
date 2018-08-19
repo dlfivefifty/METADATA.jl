@@ -18,7 +18,6 @@ const STDLIBS = sort!([
     "Logging"
     "Markdown"
     "Mmap"
-    "OldPkg"
     "Pkg"
     "Printf"
     "Profile"
@@ -29,6 +28,7 @@ const STDLIBS = sort!([
     "SharedArrays"
     "Sockets"
     "SparseArrays"
+    "Statistics"
     "SuiteSparse"
     "Test"
     "UUIDs"
@@ -88,11 +88,15 @@ function gitmeta(pkgs::Dict{String,Package})
                     LibGit2.fetch(repo, remoteurl=p.url, refspecs=["+refs/*:refs/remotes/cache/*"])
                 end
             end
-            git_commit = try LibGit2.GitObject(repo, git_commit_hash)
+            failed = false
+            git_commit = try
+                LibGit2.GitObject(repo, git_commit_hash)
             catch err
+                failed = true
                 err isa LibGit2.GitError && err.code == LibGit2.Error.ENOTFOUND || rethrow(err)
-                error("$pkg: git object $(v.sha1) could not be found")
+                @error("$pkg: git object $(v.sha1) could not be found")
             end
+            failed && continue
             git_commit isa LibGit2.GitCommit || git_commit isa LibGit2.GitTag ||
                 error("$pkg: git object $(v.sha1) not a commit – $(typeof(git_commit))")
             git_tree = LibGit2.peel(LibGit2.GitTree, git_commit)
