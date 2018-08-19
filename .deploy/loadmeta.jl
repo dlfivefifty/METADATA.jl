@@ -108,13 +108,17 @@ function load_packages(dir::String)
             v"0.6.0"  => Version("903644385b91ed8d95e5e3a5716c089dd1f1b08a"),
             v"0.6.1"  => Version("0d7248e2ff65bd6886ba3f003bf5aeab929edab5"),
             v"0.6.2"  => Version("d386e40c17d43b79fc89d3e579fc04547241787c"),
-            v"0.7.0"  => Version("e0ad15af54feecbc4e4b91281c2c15eeca7d6515"), # dummy commit, not actual 0.7!
+            v"0.6.3"  => Version("d55cadc350d426a95fd967121ba77494d08364c8"),
+            v"0.6.4"  => Version("9d11f62bcb124327831206089967f93020e84200"),
+            v"0.7.0"  => Version("a4cb80f3edcf8cea00bd9660e3b65f544f41462f"),
+            v"1.0.0"  => Version("5d4eaca0c9fa3d555c79dbacdccb9169fdf64b65"),
+            v"1.1.0"  => Version("06dd840d1b704f3cd1da93d518d0d42e3483d547"), # dummy commit, not actual 1.1
         ),
     )
     return pkgs
 end
 
-@eval julia_versions() = $(map(m->VersionNumber(0, m), 1:7))
+@eval julia_versions() = $([map(m->VersionNumber(0, m), 1:7); v"1.0"])
 julia_versions(f::Function) = filter(f, julia_versions())
 julia_versions(vi::VersionInterval) = julia_versions(v->v in vi)
 
