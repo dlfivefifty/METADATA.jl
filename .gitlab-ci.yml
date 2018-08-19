@@ -57,13 +57,21 @@ cache: {}
   tags:
     - docker-ci
   before_script:
+    # The protected environment variable REGISTRY_DEPLOY_KEY will only be present on CI
+    # builds from protected branches and tags. In particular, this means attempting to deploy
+    # from a merge request for the purposes of debugging will not work unless the feature
+    # branch is protected.
+    # See https://docs.gitlab.com/ee/user/project/protected_branches.html
+    - |
+        if [ -z "${REGISTRY_DEPLOY_KEY}" ]; then
+          echo "REGISTRY_DEPLOY_KEY is not set. Are you running on a protected branch/tag?" >&2
+          exit 1
+        fi
     # Install deploy key which allows us to push to PackageRegistry
     - '[ -d ~/.ssh ] || mkdir -m 700 ~/.ssh'
     - pushd ~/.ssh
     - echo "${REGISTRY_DEPLOY_KEY}" > deploy
     - chmod 400 ~/.ssh/deploy
-    - echo "068a1a1c6391a136b4d662a64438f730  deploy" > deploy.md5
-    - md5sum -c deploy.md5 || (env; exit 1)
     - popd
     # Setup Julia
     - export GIT_SSH_COMMAND="ssh -i ~/.ssh/deploy -o StrictHostKeyChecking=no"
@@ -73,6 +81,8 @@ cache: {}
     - ./julia-ci install-cred-helper
     - ./julia-ci install 1.0
     - source julia-ci export
+    # A source clone of Julia is required by code that looks at stdlib packages
+    - rm -rf "${CI_TMP_DIR}/julia_source"
     - git clone https://github.com/JuliaLang/julia.git "${CI_TMP_DIR}/julia_source" --depth 1
   script:
     - julia --color=yes "${CI_PROJECT_DIR}/.deploy/update.jl"
