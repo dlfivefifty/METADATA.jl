@@ -8,20 +8,48 @@ variables:
 # https://docs.gitlab.com/ce/ci/caching/index.html#disabling-cache-on-specific-jobs
 cache: {}
 
-"METADATA":
+.test_metadata: &test_metadata
   image: amazonlinux:2
   tags:
     - docker-ci
   before_script:
-    - yum install -y -q curl tar git findutils sed
     # Grant access to registered private packages
-    - REGEX="s;https://gitlab.invenia.ca/;https://gitlab-ci-token:$CI_JOB_TOKEN@gitlab.invenia.ca/;"
-    - find "$CI_PROJECT_DIR" -maxdepth 2 -name url | xargs sed -i -e "$REGEX"
-    # If any success files exist, remove them
-    - rm -f $CI_TMP_DIR/success-*
+    - yum install -y -q curl tar git findutils sed
+    - |
+      if [[ "$CI_JULIA_VERSION" == "0.6" ]]; then
+        REGEX="s;https://gitlab.invenia.ca/;https://gitlab-ci-token:$CI_JOB_TOKEN@gitlab.invenia.ca/;"
+        find "$CI_PROJECT_DIR" -maxdepth 2 -name url | xargs sed -i -e "$REGEX"
+      else
+        curl -s -o julia-ci https://gitlab.invenia.ca/infrastructure/gitlab-ci-helper/raw/master/julia-ci
+        chmod +x julia-ci
+        ./julia-ci install-cred-helper
+      fi
+    # Install requirements for .test/ci.sh and .test/check-https.sh
+    - yum install -y -q curl tar gzip git
   script:
     - sh .test/check-https.sh gitlab.invenia.ca
     - sh .test/ci.sh
+
+"0.6 Metadata":
+  variables:
+    CI_JULIA_VERSION: "0.6"
+  <<: *test_metadata
+
+"0.7 Metadata":
+  variables:
+    CI_JULIA_VERSION: "0.7"
+  <<: *test_metadata
+
+"1.0 Metadata":
+  variables:
+    CI_JULIA_VERSION: "1.0"
+  <<: *test_metadata
+
+"Nightly Metadata":
+  variables:
+    CI_JULIA_VERSION: "nightly"
+  <<: *test_metadata
+
 
 "Sync PackageRegistry":
   stage: deploy
